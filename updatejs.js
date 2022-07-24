@@ -11,11 +11,11 @@ class Template{
         let finalHtml = this.html;
         for(let entrie of Object.entries(keys)){
             finalHtml = finalHtml.replace(/{[a-zA-Z0-9.\[\]]+}/g, function (match, index) {
-                match = match.slice(1).slice(0, -1);
+                match = match.slice(1, -1);
                 let value = keys;
                 for(let x of match.split(".")){
                     if(/\[[0-9]+\]/g.test(x)){
-                        value = value[x.split("[")[0]][x.match(/\[[0-9]+\]/g)[0].slice(1).slice(0, -1)];
+                        value = value[x.split("[")[0]][x.match(/\[[0-9]+\]/g)[0].slice(1, -1)];
                     }else{
                         value = value[x];
                     }
@@ -27,27 +27,16 @@ class Template{
     }
 }
 
-class Component{
-    constructor(balise, tags){
-        this.balise = balise;
-        this.tags = tags
-    }
-
-    create(container){
-        
-    }
-}
-
 class Cookie{
     constructor(name){
         this.name = name;
     }
 
-    set(value, exdays = 14){
+    set(value, exdays = 14, path="/", samesite = "strict", secure = true){
         const d = new Date();
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         let expires = "expires="+ d.toUTCString();
-        document.cookie = this.name + "=" + value + ";" + expires + ";path=/";
+        document.cookie = this.name + "=" + value + ";" + expires + ";path="+path+";samesite="+samesite + (secure ? ";secure" : "");
     }
 
     get(){
@@ -67,10 +56,100 @@ class Cookie{
     }
 
     delete(){
-        document.cookie = this.name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = this.name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;samesite=strict;secure";
     }
 
     expire(exdays){
         this.set(this.get(), exdays);
     }
+}
+
+class SpaManager{
+    constructor(panels, defaultActivePanel, enableroute = true){
+        this.panels = {}
+        this.defaultDisplay = {};
+        this.enableroute = enableroute;
+
+
+        for(let panelId of panels){
+            this.panels[panelId] = document.getElementById(panelId);
+            this.defaultDisplay[panelId] = window.getDefaultComputedStyle(this.panels[panelId]).display;
+        }
+
+        if(this.enableroute){
+            for(let key of Object.keys(document.location.getParams())){
+                if(Object.keys(this.panels).includes(key)){
+                    console.log(key);
+                    return this.setActive(key);
+                }
+            }
+        }
+        this.setActive(defaultActivePanel);
+    }
+
+    setActive(id){
+        for(let panel of Object.values(this.panels)){
+            panel.style.display = "none";
+        }
+        
+        this.panels[id].style.display = this.defaultDisplay[id];
+        this.enableroute ? window.history.pushState("", "", "?"+id) : null;
+    }
+}
+
+String.prototype.toHtmlEntities = function(){
+    return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+String.prototype.parseJwt = function(){
+    var base64Url = this.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+Location.prototype.getParams = function(){
+    if(this.href.split("?", 2).length == 1){
+        return {};
+    }
+
+    let dic = {};
+    for(let key of this.href.split("?", 2)[1].split("&")){
+        if(key.includes("=")){
+            dic[key.split("=")[0]] = key.split("=")[1];
+        }else{
+            dic[key] = "";
+        }
+    }
+    return dic;
+}
+
+Map.prototype.encodeBody = function(){
+    let body = [];
+    for(let property of Object.keys(this)){
+        body.push(encodeURIComponent(property) + "=" + encodeURIComponent(dictionnary[property]));
+    }
+    return body.join("&");
+}
+
+String.prototype.isEmpty = function(){
+    if(this.replaceAll(" ", "") == ""){
+        return true;
+    }else if(this.replaceAll("   ", "") == ""){
+        return true;
+    }else if(this.replaceAll("ㅤ", "") == ""){
+        return true;
+    }else if(this == undefined){
+        return true;
+    }else if(this == null){
+        return true;
+    }
+    return false;
+}
+
+String.prototype.isNumeric = function(){
+    return !isNaN(this); 
 }
