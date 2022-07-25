@@ -9,21 +9,28 @@ class Template{
 
     render(keys){
         let finalHtml = this.html;
-        for(let entrie of Object.entries(keys)){
-            finalHtml = finalHtml.replace(/{[a-zA-Z0-9.\[\]]+}/g, function (match, index) {
-                match = match.slice(1, -1);
-                let value = keys;
-                for(let x of match.split(".")){
-                    if(/\[[0-9]+\]/g.test(x)){
-                        value = value[x.split("[")[0]][x.match(/\[[0-9]+\]/g)[0].slice(1, -1)];
-                    }else{
-                        value = value[x];
-                    }
+        finalHtml = finalHtml.replace(/{[a-zA-Z0-9.\[\]]+}/g, function (match, index) {
+            match = match.slice(1, -1);
+            let value = keys;
+            for(let x of match.split(".")){
+                if(/\[[0-9]+\]/g.test(x)){
+                    value = value[x.split("[")[0]][x.match(/\[[0-9]+\]/g)[0].slice(1, -1)];
+                }else{
+                    value = value[x];
                 }
-                return value;
-            });
+            }
+            return value;
+        });
+
+        for(let element of new DOMParser().parseFromString("<div>" + finalHtml + "</div>", "text/xml").childNodes[0].childNodes){
+            if(element.nodeName == "#text"){
+                if(element.data.replaceAll("\n", "").isEmpty()){ continue; }
+                this.parent.appendChild(document.createTextNode(element.data));
+                continue;
+            }
+            let block = this.parent.appendChild(document.createElement(element.tagName));
+            block.innerHTML = element.innerHTML;
         }
-        this.parent.innerHTML += finalHtml;
     }
 }
 
@@ -79,7 +86,6 @@ class SpaManager{
         if(this.enableroute){
             for(let key of Object.keys(document.location.getParams())){
                 if(Object.keys(this.panels).includes(key)){
-                    console.log(key);
                     return this.setActive(key);
                 }
             }
