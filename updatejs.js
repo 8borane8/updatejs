@@ -71,38 +71,6 @@ class Cookie{
     }
 }
 
-class SpaManager{
-    constructor(panels, defaultActivePanel, enableroute = true){
-        this.panels = {}
-        this.defaultDisplay = {};
-        this.enableroute = enableroute;
-
-
-        for(let panelId of panels){
-            this.panels[panelId] = document.getElementById(panelId);
-            this.defaultDisplay[panelId] = window.getDefaultComputedStyle(this.panels[panelId]).display;
-        }
-
-        if(this.enableroute){
-            for(let key of Object.keys(document.location.getParams())){
-                if(Object.keys(this.panels).includes(key)){
-                    return this.setActive(key);
-                }
-            }
-        }
-        this.setActive(defaultActivePanel);
-    }
-
-    setActive(id){
-        for(let panel of Object.values(this.panels)){
-            panel.style.display = "none";
-        }
-        
-        this.panels[id].style.display = this.defaultDisplay[id];
-        this.enableroute ? window.history.pushState("", "", "?"+id) : null;
-    }
-}
-
 String.prototype.toHtmlEntities = function(){
     return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
@@ -158,4 +126,138 @@ String.prototype.isEmpty = function(){
 
 String.prototype.isNumeric = function(){
     return !isNaN(this); 
+}
+
+class SpaManager{
+    constructor(panels, enableroute = true){
+        this.panels = {}
+        this.enableroute = enableroute;
+        this.active_panel = null;
+
+
+        for(let panel of panels){
+            console.log(panel.id)
+            this.panels[panel.id] = panel;
+        }
+
+        if(this.enableroute){
+            for(let key of Object.keys(document.location.getParams())){
+                if(Object.keys(this.panels).includes(key)){
+                    return this.setActive(key);
+                }
+            }
+        }
+    }
+
+    setActive(id){
+        if(this.active_panel != null){
+            this.panels[this.active_panel].hide();
+        }else{
+            this.hideAllPanels();
+        }
+
+        this.panels[id].show();
+        
+        this.active_panel = this.panels[id].id;
+        this.enableroute ? window.history.pushState("", "", "?"+id) : null;
+    }
+
+    hideAllPanels(){
+        for(let panel of Object.values(this.panels)){
+            panel.hide();
+        }
+    }
+
+    getPanel(id){
+        return this.panels[id];
+    }
+
+    resetAllPanels(){
+        for(let panel of Object.values(this.panels)){
+            panel.reset();
+        }
+    }
+
+    clearAllPanels(){
+        for(let panel of Object.values(this.panels)){
+            panel.clear();
+        }
+    }
+}
+
+class SpaPanel{
+    constructor(id, show = null, hide = null){
+        this.id = id
+        this.element = document.getElementById(this.id);
+        this.defaultContent = this.element.innerHTML;
+        this.show = show;
+        this.hide = hide;
+
+        if(this.show == null){
+            this.show = () => {this.element.style.display = "block";};
+        }
+
+        if(this.hide == null){
+            this.hide = () => {this.element.style.display = "none";};
+        }
+    }
+
+    reset(){
+        this.element.innerHTML = this.defaultContent();
+    }
+
+    clear(){
+        this.element.innerHTML = new String();
+    }
+}
+
+Function.prototype.executeSpeed = function(){
+    let timestamp = Date.now();
+    this();
+    return Date.now() - timestamp;
+}
+
+class Request{
+    constructor(url, body=null, headers={}, method = "GET", async = true, callback = null){
+        this.xmlHttp = new XMLHttpRequest();
+        this.url = url;
+        this.method = method.toUpperCase();
+        this.async = async;
+        this.body = body;
+        this.headers = headers;
+        this.callback = callback;
+
+        this.isExecute = false;
+    }
+
+    execute(){
+        if(this.isExecute){
+            return
+        }
+        this.isExecute = true;
+        this.xmlHttp.open(this.method, this.url, this.async);
+
+        this.xmlHttp.onreadystatechange = function(xmlHttp){
+            if(xmlHttp.target.readyState == XMLHttpRequest.DONE) {
+                callback != null ? callback() : null;
+            }
+        }
+
+        for(let header of Object.entries(this.headers)){
+            xmlhttp.setRequestHeader(header[0], header[1]);
+        }
+        this.xmlHttp.send(null);
+    }
+
+    getResponse(){
+        return this.xmlHttp.response;
+    }
+
+    getTextResponse(){
+        return this.xmlHttp.responseText;
+    }
+
+    getStatusCode(){
+        return this.xmlHttp.status;
+    }
 }
