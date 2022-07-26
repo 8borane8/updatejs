@@ -3,13 +3,14 @@ class Template{
         this.parent = document.getElementById(parentId);
         this.defaultHtmlContent = this.parent.innerHTML;
         this.html = html;
+
+        this.renders = [];
     }
 
     reset() { this.parent.innerHTML = this.defaultHtmlContent; }
 
-    render(keys){
-        let finalHtml = this.html;
-        finalHtml = finalHtml.replace(/{[a-zA-Z0-9.\[\]]+}/g, function (match, index) {
+    getFinalHtml(keys){
+        return this.html.replace(/{[a-zA-Z0-9.\[\]]+}/g, function (match, index) {
             match = match.slice(1, -1);
             let value = keys;
             for(let x of match.split(".")){
@@ -21,15 +22,37 @@ class Template{
             }
             return value;
         });
+    }
 
+    render(keys){
+        let finalHtml = this.getFinalHtml(keys);
+
+        let blocks = [];
         for(let element of new DOMParser().parseFromString("<div>" + finalHtml + "</div>", "text/xml").childNodes[0].childNodes){
             if(element.nodeName == "#text"){
                 if(element.data.replaceAll("\n", "").isEmpty()){ continue; }
-                this.parent.appendChild(document.createTextNode(element.data));
+                blocks.push(this.parent.appendChild(document.createTextNode(element.data)));
                 continue;
             }
-            let block = this.parent.appendChild(document.createElement(element.tagName));
-            block.innerHTML = element.innerHTML;
+            blocks.push(this.parent.appendChild(document.createElement(element.tagName)));
+            blocks[blocks.length - 1].innerHTML = element.innerHTML;
+        }
+        this.renders.push(blocks);
+    }
+
+    updateRender(id, keys){
+        if(id >= this.renders.length){ return; }
+        let finalHtml = this.getFinalHtml(keys);
+        let i = 0;
+        for(let element of new DOMParser().parseFromString("<div>" + finalHtml + "</div>", "text/xml").childNodes[0].childNodes){
+            if(element.nodeName == "#text"){
+                if(element.data.replaceAll("\n", "").isEmpty()){ continue; }
+                this.renders[id][i].textContent = element.data;
+                i++;
+                continue;
+            }
+            this.renders[id][i].innerHTML = element.innerHTML;
+            i++;
         }
     }
 }
@@ -136,7 +159,6 @@ class SpaManager{
 
 
         for(let panel of panels){
-            console.log(panel.id)
             this.panels[panel.id] = panel;
         }
 
@@ -211,9 +233,9 @@ class SpaPanel{
     }
 }
 
-Function.prototype.executeSpeed = function(){
+Function.prototype.executeSpeed = function(...args){
     let timestamp = Date.now();
-    this();
+    this(args);
     return Date.now() - timestamp;
 }
 
