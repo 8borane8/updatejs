@@ -283,3 +283,81 @@ class Request{
         return this.xmlHttp.status;
     }
 }
+
+class Carousel{
+    constructor(images, image_id, backButton, nextButton, update = null, updateTimeRate = 3000){
+        this.images = images;
+        this.index = 0;
+        this.timeout;
+        this.inTransition = false;
+        this.image = document.getElementById(image_id);
+        this.backButton = document.getElementById(backButton);
+        this.nextButton = document.getElementById(nextButton);
+
+        this.animationTime = 0;
+        this.updateTimeRate = updateTimeRate;
+
+        this.update != null ? this.update = update : this.update = this.defaultUpdate;
+
+        this.launch_animation();
+        this.backButton.addEventListener("click", function(){
+            if(this.inTransition){
+                return;
+            }else{
+                this.inTransition = true;
+            }
+            clearTimeout(this.timeout);
+            if(this.index == 0){
+                this.index = this.images.length - 1;
+            }else{
+                this.index -= 1;
+            }
+        
+            this.update();
+        }.bind(this));
+        
+        this.nextButton.addEventListener("click", function(){
+            if(this.inTransition){
+                return;
+            }else{
+                this.inTransition = true;
+            }
+            clearTimeout(this.timeout);
+            if(this.index == this.images.length - 1){
+                this.index = 0;
+            }else{
+                this.index += 1;
+            }
+        
+            this.update();
+        }.bind(this));
+    }
+
+    defaultUpdate(){
+        this.image.style.opacity = 0;
+        setTimeout(function(){
+            this.image.src = this.images[this.index];
+        }.bind(this), 250);
+    
+        setTimeout(function(){
+            this.image.style.opacity = 1;
+            this.inTransition = false;
+            this.launch_animation();
+        }.bind(this), 500);
+    }
+
+    launch_animation(){
+        this.timeout = setTimeout(function(){
+            if(this.inTransition){
+                return this.launch_animation();
+            }else{
+                this.inTransition = true;
+            }
+            this.index += 1;
+            if(this.index == this.images.length){
+                this.index = 0;
+            }
+            this.update();
+        }.bind(this), this.updateTimeRate);
+    }
+}

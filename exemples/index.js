@@ -63,12 +63,10 @@ template.updateRender(0, {
     content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet minima quibusdam modi dolor beatae a vero repudiandae reiciendis ut labore, sapiente nesciunt eius asperiores quis aspernatur laudantium velit fugit dolorum."
 })
 
-console.log(
-    template.updateRender.executeSpeed(0, {
-        pseudo: "Jamie le bg du turfu",
-        avatar: "https://static.remove.bg/remove-bg-web/5c20d2ecc9ddb1b6c85540a333ec65e2c616dbbd/assets/start_remove-c851bdf8d3127a24e2d137a55b1b427378cd17385b01aec6e59d5d4b5f39d2ec.png",
-        yaw: "WALALLLALALALALALLALA",
-        title: "Test",
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet minima quibusdam modi dolor beatae a vero repudiandae reiciendis ut labore, sapiente nesciunt eius asperiores quis aspernatur laudantium velit fugit dolorum."
-    }).bind(template)
-);
+new Carousel([
+    "https://www.croix-rouge.fr/var/crf_internet/storage/images/accueil/actualite/migrants-deplaces-refugies/des-centres-d-hebergement-a-la-rue-salam-soigne-les-personnes-en-exil-2700/21866770-1-fre-FR/Des-centres-d-hebergement-a-la-rue-SALAM-soigne-les-personnes-en-exil_slideshow.jpg",
+    "https://www.croix-rouge.fr/var/crf_internet/storage/images/accueil/actualite/incendies/quelques-heures-a-l-abri-des-flammes-2724/21870540-1-fre-FR/Quelques-heures-a-l-abri-des-flammes_slideshow.jpg",
+    "https://www.croix-rouge.fr/var/crf_internet/storage/images/accueil/actualite/urgence-ukraine2/sous-le-chaos-la-solidarite-decouvrez-notre-edition-speciale-ukraine-!-2703/21866916-3-fre-FR/Sous-le-chaos-la-solidarite-Decouvrez-notre-edition-speciale-Ukraine_slideshow.jpg",
+    "https://www.croix-rouge.fr/var/crf_internet/storage/images/accueil/actualite/resilience-notre-rapport-annuel-2021-2701/21866823-4-fre-FR/ResiLIENce-notre-rapport-annuel-2021_slideshow.jpg",
+    "https://www.croix-rouge.fr/var/crf_internet/storage/images/accueil/actualite/migrants-deplaces-refugies/de-l-exil-aux-vignobles-rencontre-avec-daoud-et-tomas-2719/21870106-1-fre-FR/De-l-exil-aux-vignobles-rencontre-avec-Daoud-et-Tomas_slideshow.jpg"
+], "image", "back", "next")
