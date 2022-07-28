@@ -1,0 +1,198 @@
+section#nav{
+    background-color: #f7f8fa;
+    height: 100vh;
+    border-right: solid 1px #f1f4f6;
+
+    width: 220px;
+    padding: 40px 30px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+
+
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+
+section#nav div#nav-title-container, section#nav div#nav-search-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+section#nav div#nav-title-container img{
+    border-radius: 50%;
+}
+
+section#nav div#nav-title-container h1{
+    font-size: 18px;
+    font-weight: 600;
+    color: #212731;
+}
+
+section#nav div#nav-search-container{
+    gap: 0px;
+    width: 100%;
+}
+
+section#nav div#nav-search-container svg{
+    border: solid 1px #ebeef2;
+    background-color: #ffffff;
+    border-right-style: none;
+    width: 17px;
+    height: 17px;
+    padding: 8px 0px 8px 8px;
+    border-radius: 6px 0px 0px 6px;
+    color: #909ba8;
+}
+
+section#nav div#nav-search-container input#search-input{
+    border: solid 1px #ebeef2;
+    background-color: #ffffff;
+    border-left-style: none;
+    width: calc(100% - 25px);
+    height: 17px;
+    padding: 8px;
+    border-radius: 0px 6px 6px 0px;
+    outline: none;
+}
+
+section#nav div#nav-search-container input#search-input::placeholder{
+    color: #909ba8;
+}
+
+section#nav div#nav-chapiters-container, section#nav div#nav-code-container div{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+}
+
+section#nav div#nav-chapiters-container p, section#nav div#nav-code-container div p{
+    color: #212731;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s linear;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #f7f8fa;
+}
+
+section#nav div#nav-chapiters-container p:hover, section#nav div#nav-code-container div p:hover{
+    text-decoration-color: #212731;
+}
+
+section#nav div#nav-code-container{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+}
+
+section#nav div#nav-code-container div h2{
+    font-size: 15px;
+    color: #bdc4cd;
+    cursor: pointer;
+    user-select: none;
+}
+
+section#nav div#nav-code-container div p{
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+
+
+
+main{
+    background-color: #ffffff;
+}
+
+section#exemple{
+    background-color: #121923;
+    height: 100vh;
+    border-right: solid 2px #040c16;
+
+    max-width: 25%;
+    width: 400px;
+    padding: 40px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+
+
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+
+section#exemple h1{
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+section#exemple code{
+    background-color: #18212e;
+    width: calc(100% - 20px * 2);
+    padding: 20px;
+    border-radius: 6px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+}
+
+section#exemple code button{
+    background-color: #2b394b;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: #b4b8c0;
+    border-style: none;
+    font-weight: 600;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+section#exemple code pre{
+    color: #dedfe0;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+
+
+
+@media only screen and (max-width: 1000px){
+    section#exemple{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    section#nav{
+        display: none;
+    }
+}

@@ -9,7 +9,13 @@ class Template{
         this.renders = [];
     }
 
-    reset() { this.parent.innerHTML = this.defaultHtmlContent; }
+    reset() {
+        for(let renders of this.renders){
+            for(let render of renders){
+                render.remove();
+            }
+        }
+    }
 
     getFinalHtml(keys){
         return this.html.replace(/{[a-zA-Z0-9.\[\]]+}/g, function (match, index) {
