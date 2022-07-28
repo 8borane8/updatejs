@@ -223,7 +223,7 @@ class Request{
 }
 
 class Carousel{
-    constructor(images, imageId, backButton, nextButton, update = null, updateTimeRate = 3000, animationTime = 500){
+    constructor(images, imageId, backButton, nextButton, updateTimeRate, update = null, animationTime = 500){
         this.images = images;
         this.index = 0;
         this.timeout;
@@ -232,11 +232,11 @@ class Carousel{
         this.backButton = document.getElementById(backButton);
         this.nextButton = document.getElementById(nextButton);
 
-        this.animationTime = animationTime;
         this.updateTimeRate = updateTimeRate;
 
         if(this.update == null){
-            this.image.style.transition = "all "+this.animationTime+"ms linear";
+            this.image.style.transition = "all "+this.animationTime/2+"ms linear";
+            this.animationTime = animationTime;
             this.update = this.defaultUpdate;
         }else{
             this.update = update;
@@ -280,13 +280,12 @@ class Carousel{
         this.image.style.opacity = 0;
         setTimeout(function(){
             this.image.src = this.images[this.index];
-        }.bind(this), this.animationTime/2);
-    
-        setTimeout(function(){
             this.image.style.opacity = 1;
-            this.inTransition = false;
-            this.launchAnimation();
-        }.bind(this), this.animationTime);
+            setTimeout(function(){
+                this.inTransition = false;
+                this.launchAnimation();
+            }.bind(this), this.animationTime/2);
+        }.bind(this), this.animationTime/2);
     }
 
     launchAnimation(){
@@ -301,6 +300,72 @@ class Carousel{
         }.bind(this), this.updateTimeRate);
     }
 }
+
+class Controller{
+    constructor(scrollControlHideOverflowY = true){
+        this.scrollControlHideOverflowY = scrollControlHideOverflowY;
+
+        this.keysScroll = {37: 1, 38: 1, 39: 1, 40: 1};
+        this.supportsPassive = false;
+        this.wheelOpt = this.supportsPassive ? { passive: false } : false;
+        this.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+        try {
+            window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+              get: function () { this.supportsPassive = true; } 
+            }));
+        } catch(e) {}
+    }
+
+    preventDefault(e) {
+        e.preventDefault();
+    }
+
+    preventDefaultForScrollKeys(e) {
+        if (this.keysScroll[e.keyCode]) {
+            preventDefault(e);
+            return false;
+        }
+    }
+
+    disableScroll() {
+        window.addEventListener('DOMMouseScroll', this.preventDefault, false);
+        window.addEventListener(this.wheelEvent, this.preventDefault, this.wheelOpt);
+        window.addEventListener('touchmove', this.preventDefault, this.wheelOpt);
+        window.addEventListener('keydown', this.preventDefaultForScrollKeys, false);
+        this.scrollControlHideOverflowY ? document.body.style.overflowY = "hidden" : null;
+    }
+
+    enableScroll() {
+        window.removeEventListener('DOMMouseScroll', this.preventDefault, false);
+        window.removeEventListener(this.wheelEvent, this.preventDefault, this.wheelOpt); 
+        window.removeEventListener('touchmove', this.preventDefault, this.wheelOpt);
+        window.removeEventListener('keydown', this.preventDefaultForScrollKeys, false);
+        this.scrollControlHideOverflowY ? document.body.style.overflowY = "" : null;
+    }
+
+    copyToClipboard(text) {
+        if (!navigator.clipboard) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            textArea.style.display = "none";
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            document.execCommand('copy');
+            
+            return document.body.removeChild(textArea);;
+          }
+          navigator.clipboard.writeText(text)
+    }
+}
+
 
 // --- Prototypes ---
 
