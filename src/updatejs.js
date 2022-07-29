@@ -45,7 +45,10 @@ class Template{
                 continue;
             }
             blocks.push(this.parent.appendChild(document.createElement(element.tagName)));
-            blocks[blocks.length - 1].attributes = element.attributes;
+            console.log(element);
+            for(let x of element.attributes){
+                blocks[blocks.length - 1].setAttribute(x.name, x.value)
+            }
             blocks[blocks.length - 1].innerHTML = element.innerHTML;
         }
         this.renders.push(blocks);
