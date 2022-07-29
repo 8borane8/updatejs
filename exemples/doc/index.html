@@ -22,9 +22,9 @@
                 <input type="text" id="search-input" placeholder="Search ...">
             </div>
             <div id="nav-chapiters-container">
-                <p>Introduction</p>
-                <p>Patch Note</p>
-                <p>Auteurs</p>
+                <p id="chapiter-1">Introduction</p>
+                <p id="chapiter-2">Patch Note</p>
+                <p id="chapiter-3">Auteurs</p>
             </div>
             <div id="nav-code-container">
                 <div id="nav-code-classes-container">
@@ -36,16 +36,49 @@
             </div>
         </section>
         <main>
-
+            <h1>Introduction</h1>
+            <div id="main-arg-full-container">
+                <p class="main-subtitle">Bien Démarer:</p>
+                <div class="main-arg-container">
+                    <p>1. Importer la librairie</p>
+                    <div>
+                        <p>&#x3C;script src=&#x22;https://8borane8.github.io/updatejs/src/updatejs.js&#x22; type=&#x22;application/javascript&#x22;&#x3E;&#x3C;/script&#x3E;</p>
+                        <p>Ajouter cette ligne de code avant votre script</p>
+                    </div>
+                </div>
+                <div class="main-arg-container">
+                    <p>2. Commencer à coder</p>
+                    <div>
+                        <p>js/index.js</p>
+                        <p>Créer un fichier "index.js" dans un sous répertoire "js"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="main-continue">Continuer ...</button>
         </main>
         <section id="exemple">
             <h1>Exemples</h1>
             <code>
-                <button>COPY</button>
-                <pre id="exemple-code-container">
-curl -X
-    "https://google.com"
-    -h "Authorization: Bearer {APITOKEN}"
+                <button id="copy">COPY</button>
+                <pre id="exemple-code-container" wrap="white-space">
+&#x3C;!DOCTYPE html&#x3E;
+&#x3C;html lang=&#x22;fr&#x22;&#x3E;
+    &#x3C;head&#x3E;
+        &#x3C;title&#x3E;&#x3C;/title&#x3E;
+        &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1&#x22;&#x3E;
+        &#x3C;meta charset=&#x22;utf-8&#x22;&#x3E;
+                    
+        &#x3C;link rel=&#x22;stylesheet&#x22; type=&#x22;text/css&#x22; href=&#x22;css/reset.css&#x22;&#x3E;
+        &#x3C;link rel=&#x22;stylesheet&#x22; type=&#x22;text/css&#x22; href=&#x22;css/index.css&#x22;&#x3E;
+    &#x3C;/head&#x3E;
+                    
+    &#x3C;body&#x3E;
+            
+        &#x3C;script src=&#x22;../../src/updatejs.js&#x22; type=&#x22;application/javascript&#x22;&#x3E;&#x3C;/script&#x3E;
+        &#x3C;script src=&#x22;js/index.js&#x22; type=&#x22;application/javascript&#x22;&#x3E;&#x3C;/script&#x3E;
+    &#x3C;/body&#x3E;
+&#x3C;/html&#x3E;
                 </pre>
             </code>
         </section>

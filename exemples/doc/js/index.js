@@ -54,3 +54,6 @@ function togglePrototypes(){
 
 document.getElementById("nav-code-classes-title").addEventListener("click", toggleClass);
 document.getElementById("nav-code-prototypes-title").addEventListener("click", togglePrototypes);
+
+const controller = new Controller();
+document.getElementById("copy").addEventListener("click", function(){ controller.copyToClipboard(document.getElementById("exemple-code-container").innerText); });

@@ -1,3 +1,10 @@
+body{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
 section#nav{
     background-color: #f7f8fa;
     height: 100vh;
@@ -123,16 +130,8 @@ section#nav div#nav-code-container div p{
 
 main{
     background-color: #ffffff;
-}
-
-section#exemple{
-    background-color: #121923;
-    height: 100vh;
-    border-right: solid 2px #040c16;
-
-    max-width: 25%;
-    width: 400px;
-    padding: 40px;
+    margin-left: 290px;
+    padding: 50px 40px 50px 50px;
 
     display: flex;
     justify-content: flex-start;
@@ -140,10 +139,103 @@ section#exemple{
     flex-direction: column;
     gap: 20px;
 
+    width: 100%;
+}
 
-    position: fixed;
-    top: 0px;
-    right: 0px;
+main h1{
+    font-size: 32px;
+    font-weight: 400;
+}
+
+main p.main-subtitle{
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #afb6c1;
+}
+
+main div.main-arg-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 30px 20px 50px 20px;
+    width: calc(100% - 20px * 2);
+    border: solid #f7f8fa 3px;
+    border-radius: 8px;
+    position: relative;
+}
+
+main div.main-arg-container > p{
+    font-size: 14px;
+    font-weight: 500;
+    border: solid #f4f6f8 2px;
+    border-radius: 6px;
+    padding: 10px 15px;
+    color: #6f7a8a;
+}
+
+main div.main-arg-container div{
+    position: absolute;
+    left: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+    top: 40px;
+}
+
+main div.main-arg-container div p:nth-child(1){
+    color: #5d697c;
+    font-size: 15px;
+}
+
+main div.main-arg-container div p:nth-child(2){
+    color: #87919e;
+}
+
+main button{
+    border: solid #afb6c1 1px;
+    border-radius: 6px;
+    padding: 10px 15px;
+    background-color: white;
+    cursor: pointer;
+    margin-top: 30px;
+    color: #5d697c;
+    transition: all 0.2s linear;
+}
+
+main button:hover{
+    color: black;
+}
+
+main div#main-arg-full-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+
+
+section#exemple{
+    background-color: #121923;
+    height: calc(100vh - 40px * 2);
+    border-right: solid 2px #040c16;
+
+    max-width: 400px;
+    width: 40%;
+    min-width: 200px;
+    padding: 40px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
 }
 
 section#exemple h1{
@@ -182,12 +274,24 @@ section#exemple code pre{
     line-height: 22px;
 }
 
+section#exemple code pre span.pre-specials-chars{
+    color: #bc8634;
+}
+
+section#exemple code pre span.pre-string{
+    color: #3c813d;
+}
 
 
 
-@media only screen and (max-width: 1000px){
+
+@media only screen and (max-width: 1250px){
     section#exemple{
         display: none;
+    }
+
+    main{
+        padding: 50px 15px;
     }
 }
 
