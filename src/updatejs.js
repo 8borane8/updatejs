@@ -13,6 +13,8 @@ class Template{
         for(let renders of this.renders){
             for(let render of renders){
                 render.remove();
+                this.renders = renders.filter(r => r != render);
+                delete this.renders[render]
             }
         }
     }
@@ -43,6 +45,7 @@ class Template{
                 continue;
             }
             blocks.push(this.parent.appendChild(document.createElement(element.tagName)));
+            blocks[blocks.length - 1].attributes = element.attributes;
             blocks[blocks.length - 1].innerHTML = element.innerHTML;
         }
         this.renders.push(blocks);
