@@ -45,7 +45,6 @@ class Template{
                 continue;
             }
             blocks.push(this.parent.appendChild(document.createElement(element.tagName)));
-            console.log(element);
             for(let x of element.attributes){
                 blocks[blocks.length - 1].setAttribute(x.name, x.value)
             }
