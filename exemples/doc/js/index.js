@@ -477,12 +477,93 @@ request.execute();`
                 }
             ]
         },
-        next: true,
+        next: false,
         exemple: `const controller = new Controller():
 
 controller.disableScroll();
 controller.copyToClipboard(&#x22;Tu ne peux plus scroll&#x22;)
 controller.enableScroll();`
+    },
+    {
+        "title": "ExecuteSpeed",
+        args: {
+            "Usage:": [
+                {
+                    arg: "Function.executeSpeed",
+                    value: "return -> int",
+                    description: "Retourne le temps de la fonction en ms"
+                }
+            ],
+            "Arguments:": [
+                {
+                    arg: "...args",
+                    value: "default -> none",
+                    description: "Passer les arguments de la fonction"
+                }
+            ]
+        },
+        next: true,
+        exemple: `function print(text){
+    console.log(text);
+}
+        
+console.log(print.executeSpeed(&#x22;Hello World !&#x22;))`
+    },
+    {
+        "title": "ToHtmlEntities",
+        args: {
+            "Usage:": [
+                {
+                    arg: "String.toHtmlEntities",
+                    value: "return -> string",
+                    description: "Format la chaine de caractere pour empecher les failles xss"
+                }
+            ],
+        },
+        next: true,
+        exemple: `console.log(&#x22;&#x3C;script&#x3E;&#x3C;/script&#x3E;&#x22;.toHtmlEntities())`
+    },
+    {
+        "title": "ParseJwt",
+        args: {
+            "Usage:": [
+                {
+                    arg: "String.parseJwt",
+                    value: "return -> map",
+                    description: "Retourne un dictionnaire avec les infos du jwt"
+                }
+            ],
+        },
+        next: true,
+        exemple: `console.log(&#x22;JWT&#x22;.parseJwt())`
+    },
+    {
+        "title": "GetParams",
+        args: {
+            "Usage:": [
+                {
+                    arg: "Location.getParams",
+                    value: "return -> map",
+                    description: "Retourne un dictionnaire avec les parametres get"
+                }
+            ],
+        },
+        next: true,
+        exemple: `console.log(document.location.getParams())`
+    },
+    {
+        "title": "EncodeBody",
+        args: {
+            "Usage:": [
+                {
+                    arg: "Map.encodeBody",
+                    value: "return -> string",
+                    description: "Retourne une requete en url encoded"
+                }
+            ],
+        },
+        next: true,
+        exemple: `console.log({test: &#x22;encoded !&#x22;}.encodeBody()})`
     }
 ];
 
@@ -493,6 +574,10 @@ const args_template = new Template("main-arg-full-container", `
 `)
 
 function doc(id){
+    if(window.innerWidth < "600"){
+        document.getElementById("nav").style.display = "none";
+    }
+
     document.getElementById("main-continue").setAttribute("next", parseInt(id) + 1);
     if(docs[id].next == true){
         document.getElementById("main-continue").style.display = "block";
@@ -527,8 +612,33 @@ function doc(id){
     }
 }
 
+
+window.onresize = function(){
+    if(window.innerWidth > "600"){
+        document.getElementById("nav").style.display = "flex";
+    }
+
+    if(window.innerWidth > "1250"){
+        document.getElementById("exemple").style.display = "flex";
+    }
+}
+
 document.getElementById("main-continue").addEventListener("click", function(){
     doc(document.getElementById("main-continue").getAttribute("next"));
 });
 
-doc(8);
+document.getElementById("main-options-code").addEventListener("click", function(){
+    document.getElementById("exemple").style.display = "flex";
+});
+
+document.getElementById("close-exemple").addEventListener("click", function(){
+    document.getElementById("exemple").style.display = "none";
+});
+
+document.getElementById("main-options-search").addEventListener("click", function(){
+    document.getElementById("nav").style.display = "flex";
+});
+
+document.getElementById("close-nav").addEventListener("click", function(){
+    document.getElementById("nav").style.display = "none";
+});

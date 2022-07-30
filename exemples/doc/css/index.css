@@ -7,7 +7,7 @@ body{
 
 section#nav{
     background-color: #f7f8fa;
-    height: 100vh;
+    height: calc(100vh - 40px * 2);
     border-right: solid 1px #f1f4f6;
 
     width: 220px;
@@ -240,6 +240,38 @@ main div#main-arg-full-container, main div#main-arg-full-container > div{
     gap: 15px;
 }
 
+main div#main-options-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% - 30px * 2);
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+main div#main-options-container svg{
+    cursor: pointer;
+    transition: all 0.2s linear;
+    display: none;
+}
+
+main div#main-options-container svg:nth-child(1){
+    width: 18px;
+    height: 18px;
+}
+
+main div#main-options-container svg:nth-child(2){
+    width: 22px;
+    height: 22px;
+}
+
+main div#main-options-container svg:hover{
+    opacity: 0.6;
+}
+
+
 
 
 section#exemple{
@@ -309,23 +341,75 @@ section#exemple code pre span.pre-string{
     color: #3c813d;
 }
 
+#close-exemple, #close-nav{
+    position: absolute;
+    bottom: 100px;
+    right: 20px;
+    color: #f7f8fa;
+    cursor: pointer;
+    display: none;
+}
+
+#close-nav{
+    color: #040c16;
+    bottom: 20px;
+}
+
 
 
 
 @media only screen and (max-width: 1250px){
     section#exemple{
+        left: 0px;
+        right: 0px;
+        width: calc(100% - 40px * 2);
+        max-width: none;
         display: none;
     }
 
     main{
-        padding: 50px 20px;
+        padding: 70px 20px;
         width: calc(100% - 281px - 20px * 2);
         max-width: none;
+    }
+    
+    main div#main-options-container{
+        justify-content: flex-end;
+    }
+
+    main div#main-options-container svg:nth-child(2){
+        display: block;
+    }
+
+    #close-exemple{
+        display: flex;
     }
 }
 
 @media only screen and (max-width: 600px){
     section#nav{
+        left: 0px;
+        right: 0px;
+        width: calc(100% - 30px * 2);
+        max-width: none;
         display: none;
+        z-index: 2;
+    }
+
+    main{
+        left: 0px;
+        width: calc(100% - 20px * 2);
+    }
+
+    main div#main-options-container svg:nth-child(1){
+        display: block;
+    }
+
+    main div#main-options-container{
+        justify-content: space-between;
+    }
+
+    #close-nav{
+        display: flex;
     }
 }
