@@ -52,7 +52,7 @@ function togglePrototypes(){
         for(let x of Object.entries(prototypes)){
             prototypesTemplate.render({
                 name: x[0],
-                id: i
+               id: i
             });
             i++;
         }
@@ -403,12 +403,12 @@ request.execute();`
                 },
                 {
                     arg: "backButton",
-                    value: "type: string / default -> none",
+                    value: "type: string / default -> null",
                     description: "id du bouton back"
                 },
                 {
                     arg: "nextButton",
-                    value: "type: string / default -> none",
+                    value: "type: string / default -> null",
                     description: "id du bouton next"
                 },
                 {
@@ -641,4 +641,31 @@ document.getElementById("main-options-search").addEventListener("click", functio
 
 document.getElementById("close-nav").addEventListener("click", function(){
     document.getElementById("nav").style.display = "none";
+});
+
+document.getElementById("search-input").addEventListener("input", function(){
+    classesTemplate.reset();
+    let i = 3;
+    for(let x of Object.entries(classes)){
+        if(document.getElementById("search-input").value.toString().isEmpty() || x[0].toLowerCase().includes(document.getElementById("search-input").value.toLowerCase())){
+            classesTemplate.render({
+                name: x[0],
+                id: i
+            });
+        }
+        i++;
+    }
+
+    prototypesTemplate.reset();
+    i = 3 + Object.keys(classes).length;
+    for(let x of Object.entries(prototypes)){
+        console.log(x[0]);
+        if(document.getElementById("search-input").value.toString().isEmpty() || x[0].includes(document.getElementById("search-input").value)){
+            prototypesTemplate.render({
+                name: x[0],
+                id: i
+            });
+        }
+        i++;
+    }
 });

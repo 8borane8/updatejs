@@ -235,14 +235,51 @@ class Request{
 }
 
 class Carousel{
-    constructor(images, imageId, backButton, nextButton, updateTimeRate, update = null, animationTime = 500){
+    constructor(images, imageId, backButton = null, nextButton = null, updateTimeRate, update = null, animationTime = 500){
         this.images = images;
         this.index = 0;
         this.timeout;
         this.inTransition = false;
         this.image = document.getElementById(imageId);
-        this.backButton = document.getElementById(backButton);
-        this.nextButton = document.getElementById(nextButton);
+        if(backButton != null){
+            this.backButton = document.getElementById(backButton);
+
+            this.backButton.addEventListener("click", function(){
+                if(this.inTransition){
+                    return;
+                }else{
+                    this.inTransition = true;
+                }
+                clearTimeout(this.timeout);
+                if(this.index == 0){
+                    this.index = this.images.length - 1;
+                }else{
+                    this.index -= 1;
+                }
+            
+                this.update();
+            }.bind(this));
+        }
+        if(nextButton != null){
+            this.nextButton = document.getElementById(nextButton);
+
+            this.nextButton.addEventListener("click", function(){
+                if(this.inTransition){
+                    return;
+                }else{
+                    this.inTransition = true;
+                }
+                clearTimeout(this.timeout);
+                if(this.index == this.images.length - 1){
+                    this.index = 0;
+                }else{
+                    this.index += 1;
+                }
+            
+                this.update();
+            }.bind(this));
+        }
+        
 
         this.updateTimeRate = updateTimeRate;
 
@@ -255,37 +292,6 @@ class Carousel{
         }
 
         this.launchAnimation();
-        this.backButton.addEventListener("click", function(){
-            if(this.inTransition){
-                return;
-            }else{
-                this.inTransition = true;
-            }
-            clearTimeout(this.timeout);
-            if(this.index == 0){
-                this.index = this.images.length - 1;
-            }else{
-                this.index -= 1;
-            }
-        
-            this.update();
-        }.bind(this));
-        
-        this.nextButton.addEventListener("click", function(){
-            if(this.inTransition){
-                return;
-            }else{
-                this.inTransition = true;
-            }
-            clearTimeout(this.timeout);
-            if(this.index == this.images.length - 1){
-                this.index = 0;
-            }else{
-                this.index += 1;
-            }
-        
-            this.update();
-        }.bind(this));
     }
 
     defaultUpdate(){

@@ -122,7 +122,6 @@ main section:nth-child(2) div:nth-child(2) svg:hover{
 main section:nth-child(2) div:nth-child(2) img{
     border-radius: 12px;
     transition: all 0.25s linear;
-    max-height: 430px;
 }
 
 main section:nth-child(2) > div:nth-child(3){

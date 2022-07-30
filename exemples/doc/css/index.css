@@ -213,7 +213,6 @@ div.main-arg-container > div:nth-child(2){
     position: relative;
     top: 10px;
     left: 0px;
-    min-width: 300px;
 }
 
 main button{
@@ -294,7 +293,7 @@ section#exemple{
     right: 0px;
     top: 0px;
     overflow-y: auto;
-    height: 100vh;
+    height: calc(100vh - 40px * 2);
 }
 
 section#exemple h1{
@@ -343,7 +342,7 @@ section#exemple code pre span.pre-string{
 
 #close-exemple, #close-nav{
     position: absolute;
-    bottom: 100px;
+    top: 20px;
     right: 20px;
     color: #f7f8fa;
     cursor: pointer;
@@ -352,7 +351,6 @@ section#exemple code pre span.pre-string{
 
 #close-nav{
     color: #040c16;
-    bottom: 20px;
 }
 
 
