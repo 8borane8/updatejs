@@ -51,6 +51,7 @@ class Template{
             blocks[blocks.length - 1].innerHTML = element.innerHTML;
         }
         this.renders.push(blocks);
+        return this.renders.length - 1
     }
 
     updateRender(id, keys){

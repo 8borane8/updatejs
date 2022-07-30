@@ -22,9 +22,9 @@
                 <input type="text" id="search-input" placeholder="Search ...">
             </div>
             <div id="nav-chapiters-container">
-                <p id="chapiter-1">Introduction</p>
-                <p id="chapiter-2">Patch Note</p>
-                <p id="chapiter-3">Auteurs</p>
+                <p onclick="doc(0);">Introduction</p>
+                <p onclick="doc(1);">Patch Note</p>
+                <p onclick="doc(2);">Auteurs</p>
             </div>
             <div id="nav-code-container">
                 <div id="nav-code-classes-container">
@@ -36,26 +36,35 @@
             </div>
         </section>
         <main>
-            <h1>Introduction</h1>
+
+            <h1 id="main-title">Introduction</h1>
+            
             <div id="main-arg-full-container">
-                <p class="main-subtitle">Bien Démarer:</p>
-                <div class="main-arg-container">
-                    <p>1. Importer la librairie</p>
-                    <div>
-                        <p>&#x3C;script src=&#x22;https://8borane8.github.io/updatejs/src/updatejs.js&#x22; type=&#x22;application/javascript&#x22;&#x3E;&#x3C;/script&#x3E;</p>
-                        <p>Ajouter cette ligne de code avant votre script</p>
+                <div>
+                    <p class="main-subtitle">Bien Démarer:</p>
+                    <div class="main-arg-container">
+                        <div>
+                            <p>1. Importer la librairie</p>
+                        </div>
+                        <div>
+                            <p>&#x3C;script src=&#x22;https://8borane8.github.io/updatejs/src/updatejs.js&#x22; type=&#x22;application/javascript&#x22;&#x3E;&#x3C;/script&#x3E;</p>
+                            <p>Ajouter cette ligne de code dans votre index.html</p>
+                        </div>
                     </div>
-                </div>
-                <div class="main-arg-container">
-                    <p>2. Commencer à coder</p>
-                    <div>
-                        <p>js/index.js</p>
-                        <p>Créer un fichier "index.js" dans un sous répertoire "js"</p>
+                    <div class="main-arg-container">
+                        <div>
+                            <p>2. Commencer à coder</p>
+                        </div>
+                        <div>
+                            <p>js/index.js</p>
+                            <p>Créer un fichier "index.js" dans un sous répertoire "js"</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <button id="main-continue">Continuer ...</button>
+
+            <button id="main-continue" next="1">Continuer ...</button>
+
         </main>
         <section id="exemple">
             <h1>Exemples</h1>

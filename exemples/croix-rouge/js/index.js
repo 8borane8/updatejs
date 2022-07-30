@@ -1,6 +1,6 @@
 const controller = new Controller();
 
-const carousel = new Carousel([
+Carousel([
   "https://www.croix-rouge.fr/var/crf_internet/storage/images/accueil/actualite/migrants-deplaces-refugies/des-centres-d-hebergement-a-la-rue-salam-soigne-les-personnes-en-exil-2700/21866770-1-fre-FR/Des-centres-d-hebergement-a-la-rue-SALAM-soigne-les-personnes-en-exil_slideshow.jpg",
   "https://www.croix-rouge.fr/var/crf_internet/storage/images/accueil/actualite/incendies/quelques-heures-a-l-abri-des-flammes-2724/21870540-1-fre-FR/Quelques-heures-a-l-abri-des-flammes_slideshow.jpg",
   "https://www.croix-rouge.fr/var/crf_internet/storage/images/accueil/actualite/urgence-ukraine2/sous-le-chaos-la-solidarite-decouvrez-notre-edition-speciale-ukraine-!-2703/21866916-3-fre-FR/Sous-le-chaos-la-solidarite-Decouvrez-notre-edition-speciale-Ukraine_slideshow.jpg",

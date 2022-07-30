@@ -47,6 +47,10 @@ section#nav div#nav-title-container h1{
 section#nav div#nav-search-container{
     gap: 0px;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 section#nav div#nav-search-container svg{
@@ -130,8 +134,8 @@ section#nav div#nav-code-container div p{
 
 main{
     background-color: #ffffff;
-    margin-left: 290px;
     padding: 50px 40px 50px 50px;
+    height: calc(100vh - 50px * 2);
 
     display: flex;
     justify-content: flex-start;
@@ -140,6 +144,12 @@ main{
     gap: 20px;
 
     width: 100%;
+
+    position: fixed;
+    overflow-y: scroll;
+    left: 281px;
+    right: calc(100% - 281px - 40% - 40px - 50px - 41px);
+    max-width: calc(100% - 281px - 400px - 40px * 2 - 50px - 41px);
 }
 
 main h1{
@@ -164,9 +174,14 @@ main div.main-arg-container{
     border: solid #f7f8fa 3px;
     border-radius: 8px;
     position: relative;
+    flex-wrap: wrap;
 }
 
-main div.main-arg-container > p{
+main div.main-arg-container div:nth-child(1){
+    width: 230px;
+}
+
+main div.main-arg-container div:nth-child(1) p{
     font-size: 14px;
     font-weight: 500;
     border: solid #f4f6f8 2px;
@@ -176,14 +191,12 @@ main div.main-arg-container > p{
 }
 
 main div.main-arg-container div{
-    position: absolute;
     left: 250px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     gap: 15px;
     flex-direction: column;
-    top: 40px;
 }
 
 main div.main-arg-container div p:nth-child(1){
@@ -193,6 +206,14 @@ main div.main-arg-container div p:nth-child(1){
 
 main div.main-arg-container div p:nth-child(2){
     color: #87919e;
+}
+
+div.main-arg-container > div:nth-child(2){
+    margin-bottom: 10px;
+    position: relative;
+    top: 10px;
+    left: 0px;
+    min-width: 300px;
 }
 
 main button{
@@ -210,7 +231,7 @@ main button:hover{
     color: black;
 }
 
-main div#main-arg-full-container{
+main div#main-arg-full-container, main div#main-arg-full-container > div{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -223,7 +244,7 @@ main div#main-arg-full-container{
 
 section#exemple{
     background-color: #121923;
-    height: calc(100vh - 40px * 2);
+    min-height: calc(100vh - 40px * 2);
     border-right: solid 2px #040c16;
 
     max-width: 400px;
@@ -236,6 +257,12 @@ section#exemple{
     align-items: flex-start;
     flex-direction: column;
     gap: 20px;
+
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    overflow-y: auto;
+    height: 100vh;
 }
 
 section#exemple h1{
@@ -291,7 +318,9 @@ section#exemple code pre span.pre-string{
     }
 
     main{
-        padding: 50px 15px;
+        padding: 50px 20px;
+        width: calc(100% - 281px - 20px * 2);
+        max-width: none;
     }
 }
 
