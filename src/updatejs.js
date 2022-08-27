@@ -211,14 +211,14 @@ class Request{
 
         this.xmlHttp.onreadystatechange = function(xmlHttp){
             if(xmlHttp.target.readyState == XMLHttpRequest.DONE) {
-                callback != null ? callback() : null;
+                this.callback != null ? this.callback() : null;
             }
         }
 
         for(let header of Object.entries(this.headers)){
-            xmlhttp.setRequestHeader(header[0], header[1]);
+            this.xmlHttp.setRequestHeader(header[0], header[1]);
         }
-        this.xmlHttp.send(null);
+        this.xmlHttp.send(this.body);
     }
 
     getResponse(){
@@ -419,24 +419,24 @@ Location.prototype.getParams = function(){
     return dic;
 }
 
-Map.prototype.encodeBody = function(){
+Object.prototype.encodeBody = function(){
     let body = [];
     for(let property of Object.keys(this)){
-        body.push(encodeURIComponent(property) + "=" + encodeURIComponent(dictionnary[property]));
+        body.push(encodeURIComponent(property) + "=" + encodeURIComponent(this[property]));
     }
     return body.join("&");
 }
 
 String.prototype.isEmpty = function(){
-    if(this.replaceAll(" ", "") == ""){
+    if(this == undefined){
+        return true;
+    }else if(this == null){
+        return true;
+    }else if(this.replaceAll(" ", "") == ""){
         return true;
     }else if(this.replaceAll("   ", "") == ""){
         return true;
     }else if(this.replaceAll("ㅤ", "") == ""){
-        return true;
-    }else if(this == undefined){
-        return true;
-    }else if(this == null){
         return true;
     }
     return false;
