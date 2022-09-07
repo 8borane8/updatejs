@@ -221,7 +221,7 @@ class Request{
             for(let header of Object.entries(this.headers)){
                 xmlhttp.setRequestHeader(header[0], header[1]);
             }
-            this.xmlHttp.send(null);
+            this.xmlHttp.send(this.body == null ? null : this.body);
         });
     }
 
