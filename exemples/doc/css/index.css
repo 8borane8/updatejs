@@ -353,16 +353,11 @@ section#exemple code pre span.pre-string{
     color: #040c16;
 }
 
-
-
-
 @media only screen and (max-width: 1250px){
     section#exemple{
         left: 0px;
         right: 0px;
         width: calc(100% - 40px * 2);
-        max-width: none;
-        display: none;
     }
 
     main{

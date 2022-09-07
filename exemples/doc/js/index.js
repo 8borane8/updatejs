@@ -78,12 +78,12 @@ const docs = [
                 {
                     arg: "1. Importer la librairie",
                     value: "&#x3C;script src=&#x22;https://8borane8.github.io/updatejs/src/updatejs.js&#x22; type=&#x22;application/javascript&#x22;&#x3E;&#x3C;/script&#x3E;",
-                    description: "Ajouter cette ligne de code dans votre index.html"
+                    description: "Ajouter cette ligne de code dans votre index HTML"
                 },
                 {
                     arg: "2. Commencer à coder",
                     value: "js/index.js",
-                    description: "Créer un fichier \"index.js\" dans un sous répertoire \"js\""
+                    description: "Créer un fichier \"index.js\" dans le répertoire \"js\""
                 }
             ]
         },
@@ -174,7 +174,7 @@ const docs = [
                 {
                     arg: "render",
                     value: "args -> (keys) / return -> none",
-                    description: "Génére un nouveau template formater avec keys dans le parent"
+                    description: "Génère un nouveau template formaté avec keys dans le parent"
                 },
                 {
                     arg: "updateRender",
@@ -564,6 +564,34 @@ console.log(print.executeSpeed(&#x22;Hello World !&#x22;))`
         },
         next: true,
         exemple: `console.log({test: &#x22;encoded !&#x22;}.encodeBody()})`
+    },
+    {
+        "title": "IsEmpty",
+        args: {
+            "Usage:": [
+                {
+                    arg: "String.isEmpty",
+                    value: "return -> boolean",
+                    description: "Retourne true si le string est vide"
+                }
+            ],
+        },
+        next: true,
+        exemple: `console.log("".isEmpty())`
+    },
+    {
+        "title": "IsNumeric",
+        args: {
+            "Usage:": [
+                {
+                    arg: "String.isNumeric",
+                    value: "return -> boolean",
+                    description: "Retourne true si le string est un nombre"
+                }
+            ],
+        },
+        next: false,
+        exemple: `console.log("".isNumeric())`
     }
 ];
 
@@ -611,14 +639,12 @@ function doc(id){
         i++
     }
 }
-
-
 window.onresize = function(){
     if(window.innerWidth > "600"){
         document.getElementById("nav").style.display = "flex";
     }
 
-    if(window.innerWidth > "1250"){
+    if(window.innerWidth > "1250" && exemple_resize == true){
         document.getElementById("exemple").style.display = "flex";
     }
 }
@@ -659,7 +685,6 @@ document.getElementById("search-input").addEventListener("input", function(){
     prototypesTemplate.reset();
     i = 3 + Object.keys(classes).length;
     for(let x of Object.entries(prototypes)){
-        console.log(x[0]);
         if(document.getElementById("search-input").value.toString().isEmpty() || x[0].includes(document.getElementById("search-input").value)){
             prototypesTemplate.render({
                 name: x[0],
@@ -669,3 +694,5 @@ document.getElementById("search-input").addEventListener("input", function(){
         i++;
     }
 });
+
+doc(0)
