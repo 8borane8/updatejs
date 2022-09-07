@@ -335,6 +335,11 @@ token.delete();`
                     description: "Id du panel"
                 },
                 {
+                    arg: "method",
+                    value: "type: string / default -> GET",
+                    description: "GET / POST / DELETE / UPDATE / PUT / ..."
+                },
+                {
                     arg: "body",
                     value: "type: string / default -> null",
                     description: "Affiche le panel"
@@ -345,19 +350,14 @@ token.delete();`
                     description: "Cache le panel"
                 },
                 {
-                    arg: "method",
-                    value: "type: string / default -> GET",
-                    description: "GET / POST / DELETE / UPDATE / PUT / ..."
+                    arg: "callback",
+                    value: "type: function / default -> null",
+                    description: "Fonction appeller une fois la requete terminée"
                 },
                 {
                     arg: "async",
                     value: "type: boolean / default -> true",
                     description: "Definit si la requete est effectué en async"
-                },
-                {
-                    arg: "callback",
-                    value: "type: function / default -> null",
-                    description: "Fonction appeller une fois la requete terminée"
                 }
             ],
             "Fonctions:": [
