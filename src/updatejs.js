@@ -327,7 +327,6 @@ class Controller{
     constructor(scrollControlHideOverflowY = true){
         this.scrollControlHideOverflowY = scrollControlHideOverflowY;
 
-        this.keysScroll = {37: 1, 38: 1, 39: 1, 40: 1};
         this.supportsPassive = false;
         this.wheelOpt = this.supportsPassive ? { passive: false } : false;
         this.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
@@ -344,7 +343,7 @@ class Controller{
     }
 
     preventDefaultForScrollKeys(e) {
-        if (this.keysScroll[e.keyCode]) {
+        if ({37: 1, 38: 1, 39: 1, 40: 1}[e.keyCode]) {
             preventDefault(e);
             return false;
         }
@@ -432,15 +431,15 @@ Map.prototype.encodeBody = function(){
 }
 
 String.prototype.isEmpty = function(){
-    if(this.replaceAll(" ", "") == ""){
+    if(this == undefined){
+        return true;
+    }else if(this == null){
+        return true;
+    }else if(this.replaceAll(" ", "") == ""){
         return true;
     }else if(this.replaceAll("   ", "") == ""){
         return true;
     }else if(this.replaceAll("ㅤ", "") == ""){
-        return true;
-    }else if(this == undefined){
-        return true;
-    }else if(this == null){
         return true;
     }
     return false;
