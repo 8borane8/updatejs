@@ -99,7 +99,7 @@ class Cookie{
     }
 
     delete(){
-        document.cookie = this.name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;samesite=strict;secure";
+        document.cookie = this.name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;samesite=strict;";
     }
 
     expire(exdays){
