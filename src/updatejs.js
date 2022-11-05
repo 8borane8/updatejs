@@ -387,11 +387,11 @@ class Request{
     }
 }
 
-async function request(url, options = null, callback = null){
-    xmlHttp = new XMLHttpRequest();
-    method = options.method ? options.method : "GET";
-    headers = options.headers ? options.headers : {};
-    body = options.body ? options.body : null;
+async function request(url, options = {}, callback = null){
+    let xmlHttp = new XMLHttpRequest();
+    let method = options.method != undefined ? options.method : "GET";
+    let headers = options.headers != undefined ? options.headers : {};
+    let body = options.body != undefined ? options.body : "";
     if(body.constructor == {}.constructor){
         body = JSON.stringify(body);
     }
