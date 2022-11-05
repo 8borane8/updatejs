@@ -398,10 +398,13 @@ async function request(url, options = null, callback = null){
 
     return new Promise((resolve, reject) => {
         xmlHttp.open(method, url, true);
-        xmlHttp.onreadystatechange = function(xmlHttp){
+        xmlHttp.onreadystatechange = function(){
             if(xmlHttp.readyState == XMLHttpRequest.DONE) {
-                callback != null ? callback(xmlHttp.responseText) : null;
-                resolve(xmlHttp.responseText);
+                let response = xmlHttp.responseText;
+                try{ response = JSON.parse(response) }catch{};
+                
+                callback != null ? callback(response) : null;
+                resolve(response);
             }
         }
 
