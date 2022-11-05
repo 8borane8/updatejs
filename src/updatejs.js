@@ -189,55 +189,6 @@ class SpaPanel{
     }
 }
 
-class Request{
-    constructor(url, method = "GET", body=null, headers={}, callback = null, async = true){
-        this.xmlHttp = new XMLHttpRequest();
-        this.url = url;
-        this.method = method.toUpperCase();
-        this.async = async;
-        this.body = body;
-        this.headers = headers;
-        this.callback = callback;
-
-        this.isExecute = false;
-    }
-
-    async execute(){
-        if(this.isExecute){
-            return
-        }
-        this.isExecute = true;
-        return await new Promise((resolve, reject) => {
-            this.xmlHttp.open(this.method, this.url, this.async);
-
-            this.xmlHttp.onreadystatechange = function(xmlHttp){
-                if(xmlHttp.target.readyState == XMLHttpRequest.DONE) {
-                    this.isExecute = false;
-                    this.callback != null ? this.callback(this.getTextResponse()) : null;
-                    resolve(this.getTextResponse());
-                }
-            }.bind(this)
-
-            for(let header of Object.entries(this.headers)){
-                this.xmlHttp.setRequestHeader(header[0], header[1]);
-            }
-            this.xmlHttp.send(this.body == null ? null : this.body);
-        });
-    }
-
-    getResponse(){
-        return this.xmlHttp.response;
-    }
-
-    getTextResponse(){
-        return this.xmlHttp.responseText;
-    }
-
-    getStatusCode(){
-        return this.xmlHttp.status;
-    }
-}
-
 class Carousel{
     constructor(images, imageId, backButton = null, nextButton = null, updateTimeRate, update = null, animationTime = 500){
         this.images = images;
@@ -385,6 +336,31 @@ class Controller{
           }
           navigator.clipboard.writeText(text)
     }
+}
+
+function request(url, options = null, callback = null){
+    xmlHttp = new XMLHttpRequest();
+    method = options.method ? options.method : "GET";
+    headers = options.headers ? options.headers : {};
+    body = options.body ? options.body : null;
+    if(body.constructor == {}.constructor){
+        body = JSON.stringify(body);
+    }
+
+    return new Promise((resolve, reject) => {
+        xmlHttp.open(method, url, true);
+        xmlHttp.onreadystatechange = function(){
+            if(xmlHttp.target.readyState == XMLHttpRequest.DONE) {
+                callback != null ? callback(xmlHttp.responseText) : null;
+                resolve(xmlHttp.responseText);
+            }
+        }
+
+        for(let header of Object.entries(headers)){
+            xmlHttp.setRequestHeader(header[0], header[1]);
+        }
+        xmlHttp.send(body);
+    });
 }
 
 
