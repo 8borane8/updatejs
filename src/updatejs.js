@@ -387,7 +387,7 @@ class Request{
     }
 }
 
-function request(url, options = null, callback = null){
+async function request(url, options = null, callback = null){
     xmlHttp = new XMLHttpRequest();
     method = options.method ? options.method : "GET";
     headers = options.headers ? options.headers : {};
