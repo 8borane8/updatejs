@@ -399,7 +399,7 @@ function request(url, options = null, callback = null){
     return new Promise((resolve, reject) => {
         xmlHttp.open(method, url, true);
         xmlHttp.onreadystatechange = function(xmlHttp){
-            if(xmlHttp.target.readyState == XMLHttpRequest.DONE) {
+            if(xmlHttp.readyState == XMLHttpRequest.DONE) {
                 callback != null ? callback(xmlHttp.responseText) : null;
                 resolve(xmlHttp.responseText);
             }
