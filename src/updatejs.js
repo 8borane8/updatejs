@@ -338,6 +338,55 @@ class Controller{
     }
 }
 
+class Request{
+    constructor(url, method = "GET", body=null, headers={}, callback = null, async = true){
+        this.xmlHttp = new XMLHttpRequest();
+        this.url = url;
+        this.method = method.toUpperCase();
+        this.async = async;
+        this.body = body;
+        this.headers = headers;
+        this.callback = callback;
+
+        this.isExecute = false;
+    }
+
+    async execute(){
+        if(this.isExecute){
+            return
+        }
+        this.isExecute = true;
+        return await new Promise((resolve, reject) => {
+            this.xmlHttp.open(this.method, this.url, this.async);
+
+            this.xmlHttp.onreadystatechange = function(xmlHttp){
+                if(xmlHttp.target.readyState == XMLHttpRequest.DONE) {
+                    this.isExecute = false;
+                    this.callback != null ? this.callback(this.getTextResponse()) : null;
+                    resolve(this.getTextResponse());
+                }
+            }.bind(this)
+
+            for(let header of Object.entries(this.headers)){
+                this.xmlHttp.setRequestHeader(header[0], header[1]);
+            }
+            this.xmlHttp.send(this.body == null ? null : this.body);
+        });
+    }
+
+    getResponse(){
+        return this.xmlHttp.response;
+    }
+
+    getTextResponse(){
+        return this.xmlHttp.responseText;
+    }
+
+    getStatusCode(){
+        return this.xmlHttp.status;
+    }
+}
+
 function request(url, options = null, callback = null){
     xmlHttp = new XMLHttpRequest();
     method = options.method ? options.method : "GET";
